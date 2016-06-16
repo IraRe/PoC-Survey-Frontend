@@ -18,5 +18,38 @@
  * Template Name: Start Survey
  */
 require "header.php"; ?>
-    Start Survey
+    <div class="container" ng-app="pdSurvey">
+        <div class="row" ng-controller="pdSurveyMainController">
+            <div class="col-sm-12">
+                <form role="form">
+                    <div class="form-group">
+
+
+                        <div ng-repeat="question in survey.questions track by $index">
+
+                            <label for="{{getIndexName('question', $index)}}">Frage <span ng-bind="$index + 1"></span>:</label>
+                            <h3> <span ng-bind="question.content"></span></h3>
+                            <div ng-switch on="question.type">
+                                <input type="text"  ng-switch-when="input" id="{{getIndexName('question', $index)}}"/>
+
+                                <select  ng-switch-when="select" >
+
+                                        <option ng-repeat="option in question.options" value="{{option.id}}" >{{option.value}}</option>
+
+                                </select>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                    
+                    <button class="btn btn-default" ng-click="click($event, 'bla')">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
 <?php require "footer.php" ?>
