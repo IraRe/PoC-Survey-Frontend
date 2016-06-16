@@ -2,6 +2,8 @@
  * Created by cklaffke on 16.06.2016.
  */
 
+var survey_url = '/api/survey';
+
 var questionTypes = [
     "input",
     "checkbox"
@@ -9,28 +11,17 @@ var questionTypes = [
 
 var survey = {
     "questions" : [{
+        "id" : 1,
         "content": "Wie alt sind Sie?",
-        "type": "input"
+        "type": "input",
+        "answer" : null
     }, {
+        "id" : 2,
         "content": "Wie hat es Ihnen gefallen?",
         "type": "select",
+        "answer" : null,
         "options": [
-            {
-                "id" : 1,
-                "value" : "Sehr gut"
-            },
-            {
-                "id" : 2,
-                "value" : "Gut"
-            },
-            {
-                "id" : 3,
-                "value" : "Okay"
-            },
-            {
-                "id" : 4,
-                "value" : "Nicht gut"
-            }
+                "Sehr gut","Gut","Okay","Nicht gut"
         ]
     }]
 };
@@ -41,12 +32,30 @@ app.controller('pdSurveyMainController', function ($scope) {
 
     $scope.survey = survey;
 
+    console.log(survey);
+
+    //angular.copy($scope.result);
+
     $scope.click = function (event, param) {
+        console.log(survey);
         console.log('param: ' + param);
     };
     
     $scope.getIndexName = function(prefix, index){
         return prefix + '-' + index;
+    }
+
+    $scope.getProgress = function () {
+        var answeredQuestions = 0;
+        for (i = 0; i < survey.questions.length; i++) {
+            if(survey.questions[i].answer != null)
+            {
+                answeredQuestions++;
+            }
+        }
+        return answeredQuestions / survey.questions.length * 100;
+
+
     }
 
 });

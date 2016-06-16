@@ -20,4 +20,10 @@
 	<![endif]-->
 	
 	<?php wp_head(); ?>
+
+	<div class="container">
+		<div class="jumbotron">
+			<h1>PoC Umfrage</h1>
+		</div>
+	</div>
 </head>

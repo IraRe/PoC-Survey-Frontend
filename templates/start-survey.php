@@ -30,11 +30,11 @@ require "header.php"; ?>
                             <label for="{{getIndexName('question', $index)}}">Frage <span ng-bind="$index + 1"></span>:</label>
                             <h3> <span ng-bind="question.content"></span></h3>
                             <div ng-switch on="question.type">
-                                <input type="text"  ng-switch-when="input" id="{{getIndexName('question', $index)}}"/>
+                                <input type="text" ng-switch-when="input" ng-model="question.answer" id="{{getIndexName('question', $index)}}"/>
 
-                                <select  ng-switch-when="select" >
+                                <select  ng-switch-when="select" ng-model="question.answer">
 
-                                        <option ng-repeat="option in question.options" value="{{option.id}}" >{{option.value}}</option>
+                                        <option ng-repeat="option in question.options" value="{{option}}" >{{option}}</option>
 
                                 </select>
 
@@ -45,6 +45,13 @@ require "header.php"; ?>
                     </div>
                     
                     <button class="btn btn-default" ng-click="click($event, 'bla')">Submit</button>
+
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" aria-valuenow="{{getProgress()}}"
+                             aria-valuemin="0" aria-valuemax="100"  style="width:{{getProgress()}}%">
+                            <span class="sr-only">{{getProgress}}% Complete</span>
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>
