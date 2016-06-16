@@ -24,7 +24,7 @@ require "header.php";
                          aria-valuenow="{{survey.progress}}"
                          aria-valuemin="0"
                          aria-valuemax="100">
-                        <span ng-bind="survey.progress = getProgress()"></span>
+                        <span ng-hide="survey.progress === 0" ng-bind="survey.progress = getProgress()"></span>
                     </div>
                 </div><!-- progress -->
 
