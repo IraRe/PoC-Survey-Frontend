@@ -1,62 +1,71 @@
 <?php
 /**
- * The template for displaying archive pages
- *
- * Used to display archive-type pages if nothing more specific matches a query.
- * For example, puts together date-based pages if no date.php file exists.
- *
- * If you'd like to further customize these archive views, you may create a
- * new template file for each one. For example, tag.php (Tag archives),
- * category.php (Category archives), author.php (Author archives), etc.
- *
- * @link https://codex.wordpress.org/Template_Hierarchy
- *
- * @package WordPress
- * @subpackage Twenty_Fifteen
- * @since Twenty Fifteen 1.0
+ * @link http://prodyna.com
+ * @since 1.0
  *
  * Template Name: Start Survey
  */
-require "header.php"; ?>
+require "header.php";
+?>
+
+<body class="bg-dark">
     <div class="container" ng-app="pdSurvey">
+
+        <div class="jumbotron">
+            <h1>CISS Survey</h1>
+        </div>
+
         <div class="row" ng-controller="pdSurveyMainController">
             <div class="col-sm-12">
+                <div class="progress">
+                    <div class="progress-bar progress-bar-success"
+                         style="width:{{survey.progress}}%;"
+                         role="progressbar"
+                         aria-valuenow="{{survey.progress}}"
+                         aria-valuemin="0"
+                         aria-valuemax="100">
+                        <span ng-bind="survey.progress = getProgress()"></span>
+                    </div>
+                </div><!-- progress -->
+
+                <hr>
+
                 <form role="form">
                     <div class="form-group">
-
-
                         <div ng-repeat="question in survey.questions track by $index">
 
-                            <label for="{{getIndexName('question', $index)}}">Frage <span ng-bind="$index + 1"></span>:</label>
-                            <h3> <span ng-bind="question.content"></span></h3>
                             <div ng-switch on="question.type">
-                                <input type="text" ng-switch-when="input" ng-model="question.answer" id="{{getIndexName('question', $index)}}"/>
+                                <div class="well">
+                                    <label for="{{getIndexName('question', $index)}}">
+                                        <span>Frage </span> <span ng-bind="$index + 1"></span><span>:</span>
+                                        <span ng-bind="question.content"></span>
+                                    </label>
+                                    <input ng-switch-when="input"
+                                           ng-model="question.answer"
+                                           id="{{getIndexName('question', $index)}}"
+                                           type="text"
+                                           class="form-control"/>
 
-                                <select  ng-switch-when="select" ng-model="question.answer">
-
-                                        <option ng-repeat="option in question.options" value="{{option}}" >{{option}}</option>
-
-                                </select>
-
+                                    <select ng-switch-when="select"
+                                            ng-model="question.answer"
+                                            class="form-control">
+                                        <option ng-repeat="option in question.options"
+                                                ng-bind="option"
+                                                value="{{option}}">
+                                        </option>
+                                    </select>
+                                </div>
                             </div>
-
+                            <!-- end ng-switch question type -->
                         </div>
-
+                        <!-- end ng-repeat question -->
                     </div>
-                    
-                    <button class="btn btn-default" ng-click="click($event, 'bla')">Submit</button>
-
-                    <div class="progress">
-                        <div class="progress-bar" role="progressbar" aria-valuenow="{{getProgress()}}"
-                             aria-valuemin="0" aria-valuemax="100"  style="width:{{getProgress()}}%">
-                            <span class="sr-only">{{getProgress}}% Complete</span>
-                        </div>
-                    </div>
+                    <!-- end form-group -->
+                    <button type="button" class="btn btn-primary pull-right">Submit</button>
                 </form>
             </div>
         </div>
     </div>
-
-
+</body>
 
 <?php require "footer.php" ?>

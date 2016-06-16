@@ -10,52 +10,59 @@ var questionTypes = [
 ];
 
 var survey = {
-    "questions" : [{
-        "id" : 1,
+    "questions": [{
+        "id": 1,
         "content": "Wie alt sind Sie?",
         "type": "input",
-        "answer" : null
+        "answer": undefined
     }, {
-        "id" : 2,
+        "id": 2,
         "content": "Wie hat es Ihnen gefallen?",
         "type": "select",
-        "answer" : null,
+        "answer": undefined,
         "options": [
-                "Sehr gut","Gut","Okay","Nicht gut"
+            "Sehr gut",
+            "Gut",
+            "Okay",
+            "Nicht gut"
         ]
     }]
 };
 
 var app = angular.module('pdSurvey', []);
 
+var counter = 0;
+
 app.controller('pdSurveyMainController', function ($scope) {
 
-    $scope.survey = survey;
+    $scope.survey = typeof survey === 'undefined' ? {} : survey;
 
-    console.log(survey);
+    $scope.getIndexName = function(prefix, index) {
 
-    //angular.copy($scope.result);
-
-    $scope.click = function (event, param) {
-        console.log(survey);
-        console.log('param: ' + param);
-    };
-    
-    $scope.getIndexName = function(prefix, index){
         return prefix + '-' + index;
-    }
+    };
 
-    $scope.getProgress = function () {
-        var answeredQuestions = 0;
-        for (i = 0; i < survey.questions.length; i++) {
-            if(survey.questions[i].answer != null)
-            {
-                answeredQuestions++;
+    $scope.survey.progress = 0;
+
+    $scope.getProgress = function() {
+
+        var i,
+            answer,
+            answeredQuestions = 0;
+
+        for ( i = 0; i < survey.questions.length; i = i + 1 ) {
+
+            answer = survey.questions[i].answer;
+
+            if ( typeof answer !== 'undefined' &&
+                answer.length > 0 ) {
+
+                answeredQuestions += 1;
             }
         }
+
+        console.log(counter+=1);
+
         return answeredQuestions / survey.questions.length * 100;
-
-
-    }
-
+    };
 });
