@@ -21,6 +21,7 @@
 
     <?php wp_head();?>
     <script>
-        var user = "<?php echo get_current_user();?>";
+        var user = "<?php echo get_current_user() ;?>",
+            proxyBaseUrl = "http://localhost/api";
     </script>
 </head>
