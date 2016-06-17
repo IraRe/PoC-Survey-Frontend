@@ -9,25 +9,33 @@ var questionTypes = [
     "checkbox"
 ];
 
-var survey = {
+var survey = {"id": 1,
+    "name": "MySurvey",
     "questions": [{
-        "id": 1,
-        "content": "Wie alt sind Sie?",
-        "type": "input",
-        "answer": undefined
-    }, {
+    "id": 1,
+    "questionType": "FREETEXT",
+    "questionText": "In welchem Land wurde Baseball erfunden?",
+    "answerOptions": []
+},
+    {
         "id": 2,
-        "content": "Wie hat es Ihnen gefallen?",
-        "type": "select",
-        "answer": undefined,
-        "options": [
-            "Sehr gut",
-            "Gut",
-            "Okay",
-            "Nicht gut"
-        ]
+        "questionType": "MULTIPLECHOICE",
+        "questionText": "Wann wurde die erste Verfassung der Welt verfasst?",
+        "answerOptions": [{
+            "id": 1,
+            "answerText": "1921"
+        },
+            {
+                "id": 2,
+                "answerText": "712"
+            },
+            {
+                "id": 3,
+                "answerText": "2016"
+            }]
     }]
 };
+
 
 var app = angular.module('pdSurvey', []);
 
@@ -54,7 +62,7 @@ app.controller('pdSurveyMainController', function ($scope) {
 
             answer = survey.questions[i].answer;
 
-            if ( answerIsSet(answer) ) {
+            if ( $scope.answerIsSet(answer) ) {
 
                 answeredQuestions += 1;
             }
@@ -72,3 +80,5 @@ app.controller('pdSurveyMainController', function ($scope) {
 
     };
 });
+
+

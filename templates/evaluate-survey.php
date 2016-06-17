@@ -24,7 +24,7 @@ require "header.php";
 
 					<tr>
 						<th>
-							User	
+							User
 						</th>
 						<div ng-repeat="question in survey.questions track by $index">
 							<th>
@@ -40,8 +40,8 @@ require "header.php";
 							<div ng-repeat="question in survey.questions">
 								<td>
 									<div ng-switch on="answerIsSet(question.answer)">
-										<img ng-switch-when="true" src="img/check.png">
-										<img ng-switch-when="false" src="img/cross.png">
+										<img ng-switch-when="true" src="<?php echo esc_url( get_template_directory_uri() ); ?>/img/check.png">
+										<img ng-switch-when="false" src="<?php echo esc_url( get_template_directory_uri() ); ?>/img/cross.png">
 									</div>
 								</td>
 							</div>	
