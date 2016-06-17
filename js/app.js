@@ -96,7 +96,7 @@ app.controller('pdSurveyMainController', function ($scope, $http) {
 
 app.controller('pdSurveyEvaluateController', function ($scope) {
 
-    $scope.survey = typeof survey === 'undefined' ? {} : survey;
+    $scope.survey = typeof filledSurvey === 'undefined' ? {} : filledSurvey;
 
     $scope.getIndexName = function(prefix, index) {
 
