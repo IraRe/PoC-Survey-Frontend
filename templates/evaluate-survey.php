@@ -28,25 +28,21 @@ require "header.php";
 							User
 						</th>
 						<th ng-repeat="question in survey.questions">
-							Frage <span ng-bind="question."></span>
+							Frage <span ng-bind="question.questionText"></span>
 						</th>
 					</tr>
-					<div ng-repeat="question in survey.questions track by $index">
-						<tr>
-							<td>
+					
+					<tr>
+						<td>
 
-							</td>
-								<td ng-repeat="question in survey.questions">
-									<div ng-switch on="answerIsSet(question.answer)">
-										<img ng-switch-when="true" src="<?php echo esc_url( get_template_directory_uri() ); ?>/img/check.png">
-										<img ng-switch-when="false" src="<?php echo esc_url( get_template_directory_uri() ); ?>/img/cross.png">
-									</div>
-								</td>
-						</tr>
-
-						<!-- end ng-switch question type -->
-					</div>
-					<!-- end ng-repeat question -->
+						</td>
+						<td ng-repeat="question in survey.questions">
+							<div ng-switch on="answerIsSet(question.answer)">
+								<img ng-switch-when="true" src="<?php echo esc_url( get_template_directory_uri() ); ?>/img/check.png">
+								<img ng-switch-when="false" src="<?php echo esc_url( get_template_directory_uri() ); ?>/img/cross.png">
+							</div>
+						</td>
+					</tr>
 
 				</table>
 
