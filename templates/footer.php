@@ -5,6 +5,7 @@
 
 <script src="<?php echo get_template_directory_uri(); ?>/node_modules/angular/angular.js"></script>
 <script src="<?php echo get_template_directory_uri(); ?>/js/app.js"></script>
+
 <script src="<?php echo get_template_directory_uri(); ?>/js/evaluate.js"></script>
 
 

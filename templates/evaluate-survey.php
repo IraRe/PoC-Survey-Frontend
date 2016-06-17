@@ -13,7 +13,7 @@ require "header.php";
 
 		<div class="jumbotron">
 			<h1>CISS Survey Results</h1>
-			<h2>Umfrage: {{survey.name}}</h2>
+			<h2>Umfrage: {{filledSurvey.name}}</h2>
 		</div>
 
 		<div class="row">
@@ -21,33 +21,21 @@ require "header.php";
 
 				<hr>
 
-				<table class=".table">
+                <table class=".table">
+                    <tr>
+                        <th>
+                            User
+                        </th>
+                        <td ng-repeat="question in filledSurvey.questions">
+                            Frage <span ng-bind="question.questionText"></span>
 
-					<tr>
-						<th>
-							User
-						</th>
-						<th ng-repeat="question in survey.questions">
-							Frage <span ng-bind="question.questionText"></span>
-						</th>
-					</tr>
-					
-					<tr>
-						<td>
+                            <div ng-repeat="answer in userAnswers">
+                                <div ng-bind="answer.answerText"></div>
+                            </div>
+                        </td>
+                    </tr>
 
-						</td>
-						<td ng-repeat="question in survey.questions">
-							<div ng-switch on="answerIsSet(question.answer)">
-								<img ng-switch-when="true" src="<?php echo esc_url( get_template_directory_uri() ); ?>/img/check.png">
-								<img ng-switch-when="false" src="<?php echo esc_url( get_template_directory_uri() ); ?>/img/cross.png">
-							</div>
-						</td>
-					</tr>
-
-				</table>
-
-
-				<button type="button" class="btn btn-primary pull-right">Umfrage bearbeiten</button>
+                </table>
 			</div>
 		</div>
 	</div>
