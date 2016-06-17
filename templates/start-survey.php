@@ -63,9 +63,7 @@ require "header.php";
                         <!-- end ng-repeat question -->
                     </div>
                     <!-- end form-group -->
-                    <a href="http://localhost/wordpress2/evaluate-survey/">
-                        <button type="button" ng-click="submit" class="btn btn-primary pull-right">Absenden</button>
-                    </a>
+                    <button type="button" ng-click="submit()" class="btn btn-primary pull-right">Absenden</button>
                 </form>
             </div>
         </div>
