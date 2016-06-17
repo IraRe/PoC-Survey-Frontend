@@ -54,8 +54,7 @@ app.controller('pdSurveyMainController', function ($scope) {
 
             answer = survey.questions[i].answer;
 
-            if ( typeof answer !== 'undefined' &&
-                answer.length > 0 ) {
+            if ( answerIsSet(answer) ) {
 
                 answeredQuestions += 1;
             }
@@ -64,5 +63,12 @@ app.controller('pdSurveyMainController', function ($scope) {
         console.log(counter+=1);
 
         return answeredQuestions / survey.questions.length * 100;
+    };
+
+    $scope.answerIsSet = function(answer) {
+
+            return ( typeof answer !== 'undefined' &&
+                answer.length > 0 );
+
     };
 });

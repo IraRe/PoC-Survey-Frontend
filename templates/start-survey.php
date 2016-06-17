@@ -8,7 +8,7 @@
 require "header.php";
 ?>
 
-<body class="bg-dark">
+<body class="bg-dark" xmlns="http://www.w3.org/1999/html">
     <div class="container" ng-app="pdSurvey">
 
         <div class="jumbotron">
@@ -44,7 +44,8 @@ require "header.php";
                                            ng-model="question.answer"
                                            id="{{getIndexName('question', $index)}}"
                                            type="text"
-                                           class="form-control"/>
+                                           class="form-control">
+                                    </input>
 
                                     <select ng-switch-when="select"
                                             ng-model="question.answer"
@@ -61,7 +62,9 @@ require "header.php";
                         <!-- end ng-repeat question -->
                     </div>
                     <!-- end form-group -->
-                    <button type="button" class="btn btn-primary pull-right">Submit</button>
+                    <a href="http://localhost/wordpress2/evaluate-survey/">
+                        <button type="button" class="btn btn-primary pull-right">Absenden</button>
+                    </a>
                 </form>
             </div>
         </div>

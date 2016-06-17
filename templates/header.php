@@ -19,5 +19,8 @@
     <script src="<?php echo esc_url( get_template_directory_uri() ); ?>/js/html5.js"></script>
     <![endif]-->
 
-    <?php wp_head(); ?>
+    <?php wp_head();?>
+    <script>
+        var user = "<?php echo get_current_user();?>";
+    </script>
 </head>

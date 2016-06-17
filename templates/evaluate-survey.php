@@ -1,65 +1,63 @@
 <?php
 /**
- * The template for displaying archive pages
+ * @link http://prodyna.com
+ * @since 1.0
  *
- * Used to display archive-type pages if nothing more specific matches a query.
- * For example, puts together date-based pages if no date.php file exists.
- *
- * If you'd like to further customize these archive views, you may create a
- * new template file for each one. For example, tag.php (Tag archives),
- * category.php (Category archives), author.php (Author archives), etc.
- *
- * @link https://codex.wordpress.org/Template_Hierarchy
- *
- * @package WordPress
- * @subpackage Twenty_Fifteen
- * @since Twenty Fifteen 1.0
+ * Template Name: Evaluate Survey
  */
+require "header.php";
+?>
 
-  require "header.php";
- ?>
+	<body class="bg-dark">
+	<div class="container" ng-app="pdSurvey">
 
-	<section id="primary" class="content-area">
-		<main id="main" class="site-main" role="main">
+		<div class="jumbotron">
+			<h1>CISS Survey Results</h1>
+		</div>
 
-		<?php if ( have_posts() ) : ?>
+		<div class="row" ng-controller="pdSurveyMainController">
+			<div class="col-sm-12">
 
-			<header class="page-header">
-				<?php
-					the_archive_title( '<h1 class="page-title">', '</h1>' );
-					the_archive_description( '<div class="taxonomy-description">', '</div>' );
-				?>
-			</header><!-- .page-header -->
+				<hr>
 
-			<?php
-			// Start the Loop.
-			while ( have_posts() ) : the_post();
+				<table class=".table">
 
-				/*
-				 * Include the Post-Format-specific template for the content.
-				 * If you want to override this in a child theme, then include a file
-				 * called content-___.php (where ___ is the Post Format name) and that will be used instead.
-				 */
-				get_template_part( 'content', get_post_format() );
+					<tr>
+						<th>
+							User	
+						</th>
+						<div ng-repeat="question in survey.questions track by $index">
+							<th>
+								Frage <span ng-bind="$index + 1"></span>
+							</th>
+						</div>
+					</tr>
+					<div ng-repeat="question in survey.questions track by $index">
+						<tr>
+							<td>
+								
+							</td>
+							<div ng-repeat="question in survey.questions">
+								<td>
+									<div ng-switch on="answerIsSet(question.answer)">
+										<img ng-switch-when="true" src="img/check.png">
+										<img ng-switch-when="false" src="img/cross.png">
+									</div>
+								</td>
+							</div>	
+						</tr>
 
-			// End the loop.
-			endwhile;
+						<!-- end ng-switch question type -->
+					</div>
+					<!-- end ng-repeat question -->
 
-			// Previous/next page navigation.
-			the_posts_pagination( array(
-				'prev_text'          => __( 'Previous page', 'twentyfifteen' ),
-				'next_text'          => __( 'Next page', 'twentyfifteen' ),
-				'before_page_number' => '<span class="meta-nav screen-reader-text">' . __( 'Page', 'twentyfifteen' ) . ' </span>',
-			) );
+				</table>
 
-		// If no content, include the "No posts found" template.
-		else :
-			get_template_part( 'content', 'none' );
 
-		endif;
-		?>
+				<button type="button" class="btn btn-primary pull-right">Umfrage bearbeiten</button>
+			</div>
+		</div>
+	</div>
+	</body>
 
-		</main><!-- .site-main -->
-	</section><!-- .content-area -->
-
-<?php require "footer.php"; ?>
+<?php require "footer.php" ?>
