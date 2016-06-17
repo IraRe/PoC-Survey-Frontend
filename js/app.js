@@ -9,60 +9,48 @@ var questionTypes = [
     "checkbox"
 ];
 
-var survey = {"id": 1,
-    "name": "MySurvey",
-    "questions": [{
-    "id": 1,
-    "questionType": "FREETEXT",
-    "questionText": "In welchem Land wurde Baseball erfunden?",
-    "answerOptions": []
-},
-    {
-        "id": 2,
-        "questionType": "MULTIPLECHOICE",
-        "questionText": "Wann wurde die erste Verfassung der Welt verfasst?",
-        "answerOptions": [{
-            "id": 1,
-            "answerText": "1921"
-        },
-            {
-                "id": 2,
-                "answerText": "712"
-            },
-            {
-                "id": 3,
-                "answerText": "2016"
-            }]
-    }]
-};
-
-
-
-
 var app = angular.module('pdSurvey', []);
 
 var counter = 0;
 
-app.controller('pdSurveyMainController', function ($scope) {
+app.controller('pdSurveyMainController', function ($scope, $http) {
 
-    $scope.survey = typeof survey === 'undefined' ? {} : survey;
+    var surveyUrl = proxyBaseUrl + '/survey/current';
+
+
+    $scope.survey = {
+        progress: 0
+    };
+
+    function init() {
+
+        $http.get(surveyUrl).then(function(resp) {
+
+            console.log(resp);
+
+            $scope.survey = resp.data;
+            $scope.survey.progress = 0;
+        });
+    }
 
     $scope.getIndexName = function(prefix, index) {
 
         return prefix + '-' + index;
     };
 
-    $scope.survey.progress = 0;
-
     $scope.getProgress = function() {
+
+        if (typeof $scope.survey.questions === 'undefined') {
+            return 0;
+        }
 
         var i,
             answer,
             answeredQuestions = 0;
 
-        for ( i = 0; i < survey.questions.length; i = i + 1 ) {
+        for ( i = 0; i < $scope.survey.questions.length; i = i + 1 ) {
 
-            answer = survey.questions[i].answer;
+            answer = $scope.survey.questions[i].answer;
 
             if ( $scope.answerIsSet(answer) ) {
 
@@ -72,24 +60,28 @@ app.controller('pdSurveyMainController', function ($scope) {
 
         console.log(counter+=1);
 
-        return answeredQuestions / survey.questions.length * 100;
+        return answeredQuestions / $scope.survey.questions.length * 100;
     };
+
+    init();
 
     $scope.submit =  function () {
         var answers = [];
 
-        var currentAnswer = null;
+        var currentAnswer = undefined;
 
-        for ( i = 0; i < survey.questions.length; i = i + 1 ) {
-            answer = survey.questions[i].answer;
+        for ( i = 0; i < $scope.survey.questions.length; i = i + 1 ) {
+            answer = $scope.survey.questions[i].answer;
 
             currentAnswer.answerText = answer;
             currentAnswer.userId = user;
-            currentAnswer.surveyName = survey.name;
-            currentAnswer.questionAnswered = survey.questions[i];
+            currentAnswer.surveyName = $scope.survey.name;
+            currentAnswer.questionAnswered = $scope.survey.questions[i];
 
             answers[i] = currentAnswer;
         }
+
+
 
         //Restcall survey + answers
     };
@@ -150,7 +142,23 @@ app.controller('pdSurveyEvaluateController', function ($scope) {
             answers[i] = currentAnswer;
         }
 
-        //Restcall survey + answers
+        var fillUrl = proxyBaseUrl + 'fill';
+
+        var data = {
+
+            survey: $scope.survey,
+            userAnswers: answers
+
+        };
+
+        console.log(data);
+
+        return ;
+
+        $http.post(fillUrl, data).then(function(resp) {
+
+            console.log(resp);
+        });
     };
 
     $scope.answerIsSet = function(answer) {

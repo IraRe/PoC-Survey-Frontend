@@ -15,14 +15,13 @@ require "header.php";
             <h1>CISS Test Angular JS</h1>
         </div>
 
-        <div class="row" ng-controller="pdTestController">
+        <div class="row">
             <div class="col-sm-12">
                 <div class="alert alert-info">
                     <strong>Info!</strong> <span ng-bind="info"></span>
                 </div>
                 <div>
-                    <button ng-click="greetMe()" class="btn btn-primary pull-right">Greet me</button>
-                    <a href="http://localhost/api/greet">Greet me</a>
+                    <button class="btn btn-primary pull-right">Greet me</button>
                 </div>
             </div>
         </div>
