@@ -9,13 +9,14 @@ require "header.php";
 ?>
 
 <body class="bg-dark" xmlns="http://www.w3.org/1999/html">
-    <div class="container" ng-app="pdSurvey">
+    <div class="container" ng-app="pdSurvey" ng-controller="pdSurveyMainController">
 
         <div class="jumbotron">
             <h1>CISS Survey</h1>
+            <h2>Umfrage: {{survey.name}}</h2>
         </div>
 
-        <div class="row" ng-controller="pdSurveyMainController">
+        <div class="row" >
             <div class="col-sm-12">
                 <div class="progress">
                     <div class="progress-bar progress-bar-success"
@@ -34,25 +35,25 @@ require "header.php";
                     <div class="form-group">
                         <div ng-repeat="question in survey.questions track by $index">
 
-                            <div ng-switch on="question.type">
+                            <div ng-switch on="question.questionType">
                                 <div class="well">
                                     <label for="{{getIndexName('question', $index)}}">
                                         <span>Frage </span> <span ng-bind="$index + 1"></span><span>:</span>
-                                        <span ng-bind="question.content"></span>
+                                        <span ng-bind="question.questionText"></span>
                                     </label>
-                                    <input ng-switch-when="input"
+                                    <input ng-switch-when="FREETEXT"
                                            ng-model="question.answer"
                                            id="{{getIndexName('question', $index)}}"
                                            type="text"
                                            class="form-control">
                                     </input>
 
-                                    <select ng-switch-when="select"
+                                    <select ng-switch-when="MULTIPLECHOICE"
                                             ng-model="question.answer"
                                             class="form-control">
-                                        <option ng-repeat="option in question.options"
-                                                ng-bind="option"
-                                                value="{{option}}">
+                                        <option ng-repeat="option in question.answerOptions"
+                                                ng-bind="option.answerText"
+                                                value="{{option.id}}">
                                         </option>
                                     </select>
                                 </div>
@@ -63,7 +64,7 @@ require "header.php";
                     </div>
                     <!-- end form-group -->
                     <a href="http://localhost/wordpress2/evaluate-survey/">
-                        <button type="button" class="btn btn-primary pull-right">Absenden</button>
+                        <button type="button" ng-click="submit" class="btn btn-primary pull-right">Absenden</button>
                     </a>
                 </form>
             </div>
